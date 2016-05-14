@@ -1,46 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic
-"       http://amix.dk - amix@amix.dk
-"
-" Version: 
-"       5.0 - 29/05/12 15:43:36
-"
-" Blog_post: 
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-"
-" Raw_version: 
-"       http://amix.dk/vim/vimrc.txt
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle specific
@@ -131,20 +89,11 @@ Plugin 'vim-scripts/CSApprox'
 " colorscheme, monokai
 Plugin 'crusoexia/vim-monokai'
 
-" colorscheme, 16 color vim-noctu
-Plugin 'noahfrederick/vim-noctu'
-
 " colorscheme, vividchalk
 Plugin 'tpope/vim-vividchalk'
 
 " colorscheme, railscast
 Plugin 'jpo/vim-railscasts-theme'
-
-" colorscheme, gruvbox
-Plugin 'morhetz/gruvbox'
-
-" colorscheme, ir_black
-Plugin 'twerth/ir_black'
 
 " colorschem
 Plugin 'Lokaltog/vim-distinguished'
@@ -163,6 +112,16 @@ Plugin 'acarapetis/vim-colors-github'
 
 " colorscheme
 Plugin 'vim-scripts/mayansmoke'
+
+" colorscheme light term16
+Plugin 'vim-scripts/xterm16.vim'
+
+" colorscheme light Cake
+Plugin 'GGalizzi/cake-vim'
+
+" colorscheme Pencil
+Plugin 'reedes/vim-colors-pencil'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -188,9 +147,6 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
-
-" Fast CoffeeScript run
-nmap <leader>cr :CoffeeRun<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -254,6 +210,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch 
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -268,10 +225,10 @@ set foldcolumn=1
 
 
 " 80 char column marker
-set colorcolumn=80
+" set colorcolumn=80
 
 " current line highlighting
-set cursorline
+" set cursorline
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -308,13 +265,15 @@ colorscheme monokai
 
 if $TERM == "xterm-256color"
     set t_Co=256
+    set background=dark
     colorscheme monokai 
 endif
 
 
 if $TERM == "screen-256color"
     set t_Co=256
-    colorscheme PaperColor
+    set background=light
+    colorscheme pencil
 endif
 
 " Set extra options when running in GUI mode
@@ -357,6 +316,9 @@ set nu
 set shiftwidth=4
 set tabstop=4
 
+" indentation for Javascript filetype
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+
 " Linebreak on 500 characters
 set lbr
 set tw=500
@@ -364,7 +326,6 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -485,7 +446,7 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
+autocmd BufWrite *.js :call DeleteTrailingWS()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ack searching and cope displaying
@@ -547,6 +508,7 @@ map <leader>pp :setlocal paste!<cr>
 
 " ctrlp specific, runtime paths
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_show_hidden=1 
 
 " line splitting cmd
 imap <C-c> <CR><Esc>O
